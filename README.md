@@ -7,6 +7,10 @@ I took a pair of broken Bluetooth headphones and decided: rather than going to t
 
 Using circuit design concepts I learned in University, I was able to create a circuit to add Bluetooth functionality to my speakers. I can now switch between wired and wireless modes, giving me the option to play music from devices without an audio jack.
 
+
+https://github.com/user-attachments/assets/5ed47675-9274-47a0-8b1d-2a69de63fe11
+
+
 ## Contents
 
 - [**Requirements**](#requirements)
@@ -106,6 +110,10 @@ Audio frequencies approaching 1.44Hz will be decreased in amplitude as a result.
 ---
 
 <br>
+
+
+https://github.com/user-attachments/assets/cb61ea47-5a1a-4f81-bed7-79674d1ef15c
+
 
 | | | | |
 |-|-|-|-|
