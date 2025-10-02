@@ -67,11 +67,11 @@ I ended up using a TL431 adjustable shunt regulator in an unconventional way. Th
 
 ![Voltage Regulator](./assets/Voltage_Regulator.png)
 
-|The output voltage of the circuit is controlled by the resistors connected to the `ADJ` pin. $V_O = 2.5(1+{R_{top} \over R_{bot}})$<br><br>
+The output voltage of the circuit is controlled by the resistors connected to the `ADJ` pin. $V_O = 2.5(1+{R_{top} \over R_{bot}})$<br><br>
 $\quad R_{top}=6k\Omega$ and $R_{bot}=10k\Omega \implies V_O = 2.5(1+{R_3 \|\| R_4 \over R_5}) = 2.5(1+{6 \over 10}) = 4V$.<br><br>
 The TL431 will compare the voltage on the `ADJ` pin to its internal 2.5V reference, and sink the necessary current away from the base of the 2N3904 in order to keep the output at 4V. Since the 2N3904 has a `VBE` of around 0.63V, the voltage at the base will be 4.63V. The TL431 requires at least 0.4mA in order to operate correctly. So by doing a simple analysis to figure out the maximum current that the regulator can supply, we assume that only 0.4mA of current is shunted to ground.<br><br>
 $\quad I_B = {{5-4.63} \over {500\Omega}} - (0.4 \times 10^{-3}) = 0.34mA$.<br><br>
-The 2N3904 has a minimum B value of 100<br><br>$\quad I_{E\;Max}=(B + 1)I_B = (101)(0.34 \times 10^{-3}) = 34.34mA$<br><br>
+The 2N3904 has a minimum B value of 100<br><br>$\quad I_{E \, Max}=(B + 1)I_B = (101)(0.34 \times 10^{-3}) = 34.34mA$<br><br>
 The regulator, although not nearly as powerful as a commercial voltage regulator, is capable of supplying more then enough current to the Bluetooth module.
 
 ---
@@ -88,7 +88,7 @@ I used an LM311 comparator to set the state of node `MFB` and designed a simple 
 When `VC` < 2V, `MFB` is pulled to ground. When `VC` > 2V, `MFB` is pulled up to 1.73V through the 91kOhm resistor of the Bluetooth module.<br><br>
 When enabling wireless mode VCC = 5V and SW2 is open, so capacitor C<sub>1</sub> is charged through resistor R<sub>10</sub>.
 $\quad \{2s<t_{on}<7s\}$<br><br>$\quad t_{on} = -(R_{10})(C_1)ln(1 - {2 \over 5}) = -(100 \times 10^3)(100 \times 10^{-6})ln(1 - {2 \over 5}) = 5.1s$<br><br>
-When enabling pairing mode VCC = 5V and SW2 is closed, so capacitor C<sub>1</sub> is charged through R<sub>10</sub> \|\| R<sub>11</sub>.$\quad\quad \{7s<t_{pair}\}$<br><br>$\quad t_{pair} = -(R_{10} \|\| R_{11})(C_1)ln(1 - {2 \over (5/2)}) = -(50 \times 10^3)(100 \times 10^{-6})ln(1 - {2 \over 2.5}) = 8.04s$<br><br>
+When enabling pairing mode VCC = 5V and SW2 is closed, so capacitor C<sub>1</sub> is charged through R<sub>10</sub> \|\| R<sub>11</sub>. $\quad \quad \{7s<t_{pair}\}$<br><br>$\quad t_{pair} = -(R_{10} \|\| R_{11})(C_1)ln(1 - {2 \over (5/2)}) = -(50 \times 10^3)(100 \times 10^{-6})ln(1 - {2 \over 2.5}) = 8.04s$<br><br>
 When VCC is set to ground, a 1N5819 schottky diode and two parallel 1kOhm resistors are used to discharge the capacitor.
 
 ---
@@ -104,7 +104,7 @@ I used a CD4052 analog multiplexer to switch between the wired and wireless mode
 ![Analog Multiplexer](./assets/Analog_Multiplexer.png)
 
 The input voltages of the CD4052 cannot exceed the supply voltage range. My audio signals swing both positive and negative so I need to level shift them to be between GND and +5V. Each channel is level shifted +2.5V using two 100kOhm resistors forming a voltage divider, and a 2.2uF capacitor. The output of the multiplexer is re-centered at GND through a 2.2uF decoupling capacitor and single 100kOhm resistor. As a drawback, this configuration forms an RC highpass filter.<br><br>
-$\quad f_{c\;in} = {1 \over {2 \pi (R_{i \; 1} \|\| R_{i \; 2})C}} = {1 \over {2 \pi (50 \times 10^3)(2.2 \times 10^{-6})}} = 1.44Hz$<br>$\quad f_{c\;out} = {1 \over {2 \pi (R_o)C}} = {1 \over {2 \pi (100 \times 10^3)(2.2 \times 10^{-6})}} = 0.72Hz$<br><br>
+$\quad f_{c \, in} = {1 \over {2 \pi (R_{i \, 1} \|\| R_{i \, 2})C}} = {1 \over {2 \pi (50 \times 10^3)(2.2 \times 10^{-6})}} = 1.44Hz$<br>$\quad f_{c \, out} = {1 \over {2 \pi (R_o)C}} = {1 \over {2 \pi (100 \times 10^3)(2.2 \times 10^{-6})}} = 0.72Hz$<br><br>
 Audio frequencies approaching 1.44Hz will be decreased in amplitude as a result.
 
 ---
